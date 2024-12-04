@@ -2,10 +2,9 @@ const express = require ('express');
 const router = express.Router();
 
 //Controllers
-const livrosController = require ('../controllers/Livros');
-const cursosController = require ('../controllers/Cursos');
+const tarefasController = require ('../controllers/tarefas');
 
-router.get ('/autores', (autoresController.listarAutores));
-router.post ('/autores', (autoresController.listarAutores));
-router.patch ('/autores', (autoresController.listarAutores));
-router.delete ('/autores', (autoresController.listarAutores));
+router.get ('/tarefas', (tarefasController.listarTarefas));
+router.post ('/tarefas', (tarefasController.cadastrarTarefa));
+router.patch ('/tarefas', (tarefasController.atualizarTarefa));
+router.delete ('/tarefas', (tarefasController.excluirTarefa));
