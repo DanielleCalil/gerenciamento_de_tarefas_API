@@ -1,10 +1,10 @@
  const mysql = require ('mysql2/promise')
 
  const bd_usuario = 'root';
- const bd_senha = '';
+ const bd_senha = '1234';
  const bd_servidor = '127.0.0.1';
  const bd_porta = '3306';
- const bd_banco = 'localhost'
+ const bd_banco = 'Dani'
 
  let connection
  
