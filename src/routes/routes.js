@@ -7,12 +7,12 @@ const usuariosController = require ('../controllers/usuarios');
 
 router.post ('/tarefas', (tarefasController.listarTarefas));
 router.post ('/tarefasCadastrar', (tarefasController.cadastrarTarefa));
-router.patch ('/tarefasEditar/:id', (tarefasController.atualizarTarefa));
+router.patch ('/tarefasEditar/:id', (tarefasController.editarTarefa));
 router.delete ('/tarefasDeletar/:id', (tarefasController.excluirTarefa));
 
 router.post ('/usuarios', (usuariosController.listarUsuarios));
 router.post ('/usuariosCadastrar', (usuariosController.cadastrarUsuario));
-router.patch ('/usuariosEditar/:id', (usuariosController.atualizarUsuario));
+router.patch ('/usuariosEditar/:id', (usuariosController.editarUsuario));
 router.delete ('/usuariosDeletar/:id', (usuariosController.excluirUsuario));
 router.post ('/usuariosLogar', (usuariosController.logarUsuario));
 

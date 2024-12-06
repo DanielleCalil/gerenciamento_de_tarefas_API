@@ -50,7 +50,7 @@ module.exports = {
     }
   },
 
-  async atualizarTarefa(request, response) {
+  async editarTarefa(request, response) {
     try {
       const { id } = request.params; // ID da tarefa a ser atualizada
       const { titulo, descricao, status } = request.body;
