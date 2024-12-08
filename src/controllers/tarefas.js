@@ -8,12 +8,11 @@ module.exports = {
     try {
       const sql = `SELECT * FROM tarefas`;
 
-      // Executa a query para buscar todas as tarefas
       const execSql = await db.query(sql);
 
       return response.status(200).json({
         sucesso: true,
-        dados: execSql[0], // Retorna a lista de tarefas
+        dados: execSql[0],
       });
     } catch (error) {
       return response.status(500).json({
@@ -27,14 +26,13 @@ module.exports = {
   async cadastrarTarefa(request, response) {
     try {
       const { titulo, descricao, status } = request.body;
-      const statusParsed = status || "pendente"; // Define 'pendente' como padrão, caso não enviado
+      const statusParsed = status || "pendente";
 
       const sql = `INSERT INTO tarefas (titulo, descricao, status) VALUES (?, ?, ?)`;
       const values = [titulo, descricao, statusParsed];
 
-      // Executa a query para inserir a tarefa
       const execSql = await db.query(sql, values);
-      const tarefaCod = execSql[0].insertId; // ID da tarefa inserida
+      const tarefaCod = execSql[0].insertId;
 
       return response.status(200).json({
         sucesso: true,
@@ -52,11 +50,10 @@ module.exports = {
 
   async editarTarefa(request, response) {
     try {
-      const { id } = request.params; // ID da tarefa a ser atualizada
+      const { id } = request.params;
       const { titulo, descricao, status } = request.body;
-      const statusParsed = status || "pendente"; // Define 'pendente' como padrão, caso não enviado
+      const statusParsed = status || "pendente";
 
-      // Verifica se a tarefa existe
       const verificaTarefa = await db.query(
         "SELECT * FROM tarefas WHERE id = ?",
         [id]
@@ -68,7 +65,6 @@ module.exports = {
         });
       }
 
-      // Atualiza a tarefa
       const sql = `UPDATE tarefas SET titulo = ?, descricao = ?, status = ? WHERE id = ?`;
       const values = [titulo, descricao, statusParsed, id];
       await db.query(sql, values);
@@ -88,9 +84,8 @@ module.exports = {
 
   async excluirTarefa(request, response) {
     try {
-      const { id } = request.params; // ID da tarefa a ser excluída
+      const { id } = request.params;
 
-      // Verifica se a tarefa existe
       const verificaTarefa = await db.query(
         "SELECT * FROM tarefas WHERE id = ?",
         [id]
@@ -102,7 +97,6 @@ module.exports = {
         });
       }
 
-      // Exclui a tarefa
       const sql = "DELETE FROM tarefas WHERE id = ?";
       await db.query(sql, [id]);
 

@@ -25,7 +25,6 @@ module.exports = {
         try {
             const { nome, email, senha } = request.body;
 
-            // Validação de campos obrigatórios
             if (!nome || !email || !senha || nome.trim() === "" || email.trim() === "" || senha.trim() === "") {
                 return response.status(400).json({
                     sucesso: false,
@@ -33,7 +32,6 @@ module.exports = {
                 });
             }
 
-            // Verificar se o e-mail já está cadastrado
             const sqlVerificaEmail = `SELECT id FROM usuarios WHERE email = ?`;
             const [usuariosExistentes] = await db.query(sqlVerificaEmail, [email]);
 
@@ -44,11 +42,9 @@ module.exports = {
                 });
             }
 
-            // Hash da senha
             const salt = await bcrypt.genSalt(10);
             const senhaHash = await bcrypt.hash(senha, salt);
 
-            // Inserir usuário
             const sqlInserirUsuario = `
                 INSERT INTO usuarios (nome, email, senha) 
                 VALUES (?, ?, ?);
@@ -75,10 +71,9 @@ module.exports = {
 
     async editarUsuario(request, response) {
         try {
-            const { id } = request.params; // ID do usuário na URL
+            const { id } = request.params;
             const { nome, email, senha } = request.body;
     
-            // Verificar se o usuário existe
             const sqlVerificaUsuario = `SELECT id FROM usuarios WHERE id = ?`;
             const [usuarioExistente] = await db.query(sqlVerificaUsuario, [id]);
     
@@ -89,13 +84,11 @@ module.exports = {
                 });
             }
     
-            // Atualizar dados, incluindo senha, se fornecida
             let sqlAtualizarUsuario = `UPDATE usuarios SET nome = ?, email = ?`;
             const values = [nome, email];
     
-            // Verifique se a senha é uma string válida
             if (senha && typeof senha === "string") {
-                const senhaHash = await bcrypt.hash(senha, 10); // Hash da senha
+                const senhaHash = await bcrypt.hash(senha, 10);
                 sqlAtualizarUsuario += `, senha = ?`;
                 values.push(senhaHash);
             }
@@ -122,7 +115,6 @@ module.exports = {
         try {
             const { id } = request.params;
 
-            // Verificar se o usuário existe
             const sqlVerificaUsuario = `SELECT id FROM usuarios WHERE id = ?`;
             const [usuarioExistente] = await db.query(sqlVerificaUsuario, [id]);
 
@@ -133,7 +125,6 @@ module.exports = {
                 });
             }
 
-            // Excluir usuário
             const sqlExcluirUsuario = `DELETE FROM usuarios WHERE id = ?`;
             await db.query(sqlExcluirUsuario, [id]);
 
@@ -161,7 +152,6 @@ module.exports = {
                 });
             }
 
-            // Buscar usuário pelo e-mail
             const sqlBuscaUsuario = `SELECT * FROM usuarios WHERE email = ?`;
             const [usuariosEncontrados] = await db.query(sqlBuscaUsuario, [email]);
 
@@ -174,7 +164,6 @@ module.exports = {
 
             const usuario = usuariosEncontrados[0];
 
-            // Verificar a senha
             const senhaValida = await bcrypt.compare(senha, usuario.senha);
 
             if (!senhaValida) {
