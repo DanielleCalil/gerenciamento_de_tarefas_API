@@ -1,0 +1,32 @@
+CREATE DATABASE Dani;
+USE Dani;
+
+CREATE TABLE tarefas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    titulo VARCHAR(255) NOT NULL,
+    descricao TEXT,
+    status ENUM('pendente', 'concluida') DEFAULT 'pendente',
+    data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+select * from tarefas;
+
+INSERT INTO tarefas (titulo, descricao, status)
+VALUES ('finalizar documentação', 'finalizar a documentação do tcc de acordo com o e-mail que o professor mandou', 'pendente');
+
+CREATE TABLE usuarios (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    senha VARCHAR(255) NOT NULL,
+    data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+INSERT INTO usuarios (nome, email, senha)
+VALUES ('Danielle', 'dacalil90@gmail.com', '123');
+
+select * from usuarios;
+
+ALTER TABLE tarefas ADD COLUMN userId INT NOT NULL;
+
+

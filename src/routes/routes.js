@@ -9,6 +9,7 @@ router.post ('/tarefas', (tarefasController.listarTarefas));
 router.post ('/tarefasCadastrar', (tarefasController.cadastrarTarefa));
 router.patch ('/tarefasEditar/:id', (tarefasController.editarTarefa));
 router.delete ('/tarefasDeletar/:id', (tarefasController.excluirTarefa));
+router.patch ('/tarefasConfirmar/:id', (tarefasController.confirmarTarefa));
 
 router.post ('/usuarios', (usuariosController.listarUsuarios));
 router.post ('/usuariosCadastrar', (usuariosController.cadastrarUsuario));
