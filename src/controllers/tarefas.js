@@ -6,8 +6,10 @@ const router = express.Router();
 module.exports = {
   async listarTarefas(request, response) {
     try {
-      const { userId } = request.body;  // Obtendo o userId do corpo da requisição
-      
+      const { userId } = request.body; // Obtém o userId do corpo da requisição
+  
+      console.log("Requisição recebida no servidor:", request.body);
+  
       if (!userId) {
         console.log('userId não fornecido.');
         return response.status(400).json({
@@ -16,12 +18,15 @@ module.exports = {
         });
       }
   
-      // Verifica se o usuário tem tarefas no banco
+      // Consulta ao banco de dados com o nome correto da coluna
       const tarefas = await db.query(
-        "SELECT * FROM tarefas WHERE user_id = ?", 
+        "SELECT * FROM tarefas WHERE userId = ?", 
         [userId]
       );
   
+      console.log("Resultado da consulta ao banco:", tarefas);
+  
+      // Verifica se nenhuma tarefa foi encontrada
       if (tarefas[0].length === 0) {
         return response.status(404).json({
           sucesso: false,
@@ -31,9 +36,10 @@ module.exports = {
   
       return response.status(200).json({
         sucesso: true,
-        dados: tarefas[0],  // Retorna as tarefas encontradas
+        dados: tarefas[0], // Retorna as tarefas encontradas
       });
     } catch (error) {
+      console.error("Erro ao listar tarefas:", error);
       return response.status(500).json({
         sucesso: false,
         mensagem: "Erro ao listar tarefas.",
@@ -41,6 +47,8 @@ module.exports = {
       });
     }
   },
+  
+  
   
 
   async cadastrarTarefa(request, response) {
