@@ -10,15 +10,13 @@ module.exports = {
       let params = [];
 
       if (id) {
-        // Se um ID for fornecido, filtra o usuário pelo ID
         sqlListarUsuarios = `SELECT id, nome, email, data_criacao FROM usuarios WHERE id = ?`;
-        params = [id]; // Passa o ID como parâmetro na consulta
+        params = [id];
       } else {
-        // Caso contrário, retorna todos os usuários
         sqlListarUsuarios = `SELECT id, nome, email, data_criacao FROM usuarios`;
       }
 
-      const [usuarios] = await db.query(sqlListarUsuarios, params); 
+      const [usuarios] = await db.query(sqlListarUsuarios, params);
 
       return response.status(200).json({
         sucesso: true,
